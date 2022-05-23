@@ -197,10 +197,10 @@ which always gives correct size!!
 
 #startStopDiv{
   position: absolute;
-  top: 1vmin;
-  height: 8vmin;
-  left: 84vmin;
-  width: 8vmin;
+  top: 2vmin;
+  height: 6vmin;
+  left: 140vmin;
+  width: 6vmin;
   z-index: 2; /* the higher the integer, the more on top */
 }
 
@@ -208,10 +208,10 @@ which always gives correct size!!
 
 #restartDiv{
   position: absolute;
-  top: 1vmin;
-  height: 8vmin;
-  left: 93vmin;
-  width: 8vmin;
+  top: 2vmin;
+  height: 6vmin;
+  left: 148vmin;
+  width: 6vmin;
   z-index: 2; /* the higher the integer, the more on top */
 }
 

@@ -111,7 +111,7 @@ function myRestartFunction(){
 
   if(isStopped){
     isStopped=false;
-    document.getElementById("startStop").src="figs/buttonStop3_small.png";
+    document.getElementById("startStop").src="figs/pause.png";
     myRun=setInterval(main_loop, 1000/fps);
   }
 
