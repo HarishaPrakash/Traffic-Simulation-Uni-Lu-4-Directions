@@ -336,6 +336,9 @@ TrafficObjects.prototype.draw=function(){
       var distCenter=0.5*crossingLineLength+0.6*road.laneWidth;
       var v=(cphi>0) ? -distCenter : distCenter; // [m]
 
+      //////////
+      // Traffic light after drop position settings
+
       if(this.active_drawTopSign){ // draw active sign above the road
         xPix=xCenterPix+scale*v*sphi;  // + left if cphi>0
         yPix=yCenterPix+scale*v*cphi;  // -*-=+
@@ -345,6 +348,7 @@ TrafficObjects.prototype.draw=function(){
         obj.xPixSign1=xPix;                // save pixel positions of 
         obj.yPixSign1=yPix-0.8*hPixActive; // light centers for later picking
       }     
+
 
       if(this.active_drawBotSign){ // draw active sign below the road
 	v*=-1;
@@ -357,7 +361,6 @@ TrafficObjects.prototype.draw=function(){
 	obj.yPixSign2=yPix-0.8*hPixActive;
       }
 
-	
       if(false){
 	console.log("TrafficObjects.draw active obj: i=",i,
 		    " type=",obj.type,
