@@ -106,7 +106,7 @@ function TrafficObjects(canvas,nTL,nLimit,xRelDepot,yRelDepot,nRow,nCol){
 
   this.gapRel=0.01;          // relative spacing (sizeCanvas)
   this.sizeRel=0.08;         // relative size of passive graphical objects
-  this.active_scaleFact=1.0; // pixel size factor active/passive objects
+  this.active_scaleFact=0.75; // pixel size factor active/passive objects
                              // other than obstacles (phys length relevant)
   this.lenPhys=25;       // physical length[m] of active obstacles
                              // (drawn by the road.draw methods)
@@ -333,33 +333,37 @@ TrafficObjects.prototype.draw=function(){
       // nice side-effect if both signs drawn: nearer sign drawn later
       // =>correct occlusion effect
       
-      var distCenter=0.5*crossingLineLength+0.6*road.laneWidth;
+      var distCenter=0.1*crossingLineLength+0.6*road.laneWidth;
       var v=(cphi>0) ? -distCenter : distCenter; // [m]
 
       //////////
       // Traffic light after drop position settings
-
+      if (obj.road.roadID===0 || obj.road.roadID===2 || obj.road.roadID===3)
+      {
       if(this.active_drawTopSign){ // draw active sign above the road
         xPix=xCenterPix+scale*v*sphi;  // + left if cphi>0
         yPix=yCenterPix+scale*v*cphi;  // -*-=+
         ctx.setTransform(1,0,0,1,xPix,yPix);
         ctx.drawImage(obj.image,-0.5*wPixActive,
-		    -hPixActive,wPixActive, hPixActive);
+		    -0.5*hPixActive,0.8*wPixActive, hPixActive);
         obj.xPixSign1=xPix;                // save pixel positions of 
         obj.yPixSign1=yPix-0.8*hPixActive; // light centers for later picking
       }     
+      }
 
-
+      if (obj.road.roadID===1 || obj.road.roadID===4)
+      {
       if(this.active_drawBotSign){ // draw active sign below the road
 	v*=-1;
         xPix=xCenterPix+scale*v*sphi;  // + left if cphi>0
         yPix=yCenterPix+scale*v*cphi;  // -*-=+
         ctx.setTransform(1,0,0,1,xPix,yPix);
-        ctx.drawImage(obj.image,-0.5*wPixActive,
-		      -hPixActive,wPixActive, hPixActive);
+        ctx.drawImage(obj.image,-0.8*wPixActive,
+		     -hPixActive,0.8*wPixActive, hPixActive);
 	obj.xPixSign2=xPix;         
 	obj.yPixSign2=yPix-0.8*hPixActive;
       }
+    }
 
       if(false){
 	console.log("TrafficObjects.draw active obj: i=",i,
@@ -669,6 +673,8 @@ TrafficObjects.prototype.dropObject=function(obj, network,
 		" obj.u=",obj.u," obj.lane=",obj.lane);
     obj.xPix=road.get_xPix(obj.u-du, obj.lane, scale);
     obj.yPix=road.get_yPix(obj.u-du, obj.lane, scale);
+    //obj.xPix= 100
+    //obj.yPix= 100 
   }
 
 

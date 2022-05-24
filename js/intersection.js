@@ -39,7 +39,7 @@ timewarp=3.5;
 
 var mainroadLen=200;              // reference size in m
 
-var laneWidth=7.0; //3 
+var laneWidth=10.0; //3 
 var car_length=5;    // car length in m (all a bit oversize for visualisation)
 var car_width=2.5;     // car width in m
 var truck_length=10;
