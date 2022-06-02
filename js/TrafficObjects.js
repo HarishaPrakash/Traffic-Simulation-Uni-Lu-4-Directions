@@ -336,16 +336,19 @@ TrafficObjects.prototype.draw=function(){
       var distCenter=0.1*crossingLineLength+0.6*road.laneWidth;
       var v=(cphi>0) ? -distCenter : distCenter; // [m]
 
-      //////////
+      
+//////////
       // Traffic light after drop position settings
-      if (obj.road.roadID===0 || obj.road.roadID===2 || obj.road.roadID===3)
+      if (obj.road.roadID===0 || obj.road.roadID===2)
       {
       if(this.active_drawTopSign){ // draw active sign above the road
         xPix=xCenterPix+scale*v*sphi;  // + left if cphi>0
         yPix=yCenterPix+scale*v*cphi;  // -*-=+
         ctx.setTransform(1,0,0,1,xPix,yPix);
+        if(obj.road.roadID===0){ctx.rotate(90*Math.PI/180);}
+        ctx.scale(-1,1)
         ctx.drawImage(obj.image,-0.5*wPixActive,
-		    -0.5*hPixActive,0.8*wPixActive, hPixActive);
+        -0.5*hPixActive,0.8*wPixActive, hPixActive);
         obj.xPixSign1=xPix;                // save pixel positions of 
         obj.yPixSign1=yPix-0.8*hPixActive; // light centers for later picking
       }     
@@ -354,16 +357,21 @@ TrafficObjects.prototype.draw=function(){
       if (obj.road.roadID===1 || obj.road.roadID===4)
       {
       if(this.active_drawBotSign){ // draw active sign below the road
-	v*=-1;
+  v*=-1;
         xPix=xCenterPix+scale*v*sphi;  // + left if cphi>0
         yPix=yCenterPix+scale*v*cphi;  // -*-=+
         ctx.setTransform(1,0,0,1,xPix,yPix);
+        if (obj.road.roadID===1){
+          ctx.rotate(-90*Math.PI/180);
+          ctx.scale(-1,1)
+          }
         ctx.drawImage(obj.image,-0.8*wPixActive,
-		     -hPixActive,0.8*wPixActive, hPixActive);
-	obj.xPixSign2=xPix;         
-	obj.yPixSign2=yPix-0.8*hPixActive;
+         -hPixActive,0.8*wPixActive, hPixActive);
+  obj.xPixSign2=xPix;         
+  obj.yPixSign2=yPix-0.8*hPixActive;
       }
     }
+
 
       if(false){
 	console.log("TrafficObjects.draw active obj: i=",i,
@@ -928,4 +936,3 @@ TrafficObjects.prototype.writeObjects=function(onlyTL){
     }
   }
 }
-
