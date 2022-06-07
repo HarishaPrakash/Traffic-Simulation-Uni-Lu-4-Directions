@@ -1,5 +1,6 @@
 
 const userCanDropObjects=true;
+var toggle = 0
 //var drawVehIDs=true; // defined in control_gui.js
 //var drawRoadIDs=true; // defined in control_gui.js
 var showCoords=true;  // show logical coords of nearest road to mouse pointer
@@ -144,10 +145,15 @@ traffLightGreenImg = new Image();
 traffLightGreenImg.src='figs/trafficLightGreen_affine.png';
 
 
+//*********************
+//Chnaged by Harisha
+//*********************
+
 //define obstacle image names
 
 obstacleImgNames = []; // srcFiles[0]='figs/obstacleImg.png'
 obstacleImgs = []; // srcFiles[0]='figs/obstacleImg.png'
+/*
 for (var i=0; i<10; i++){
   obstacleImgs[i]=new Image();
   obstacleImgs[i].src = (i==0)
@@ -155,7 +161,7 @@ for (var i=0; i<10; i++){
     : "figs/constructionVeh"+(i)+".png";
   obstacleImgNames[i] = obstacleImgs[i].src;
 }
-
+*/
 // init road images for 1 to 4 lanes
 
 roadImgWith_lane = []; // road with lane separating line
@@ -570,7 +576,6 @@ function updateSim(){
     }
   }
 
-
   // checkForCrashes(); //!!!! deactivate for production; many false alarms!!
   
   // updateSim (1): update time, global geometry, and traffic objects
@@ -817,8 +822,38 @@ function updateSim(){
     detectors[iDet].update(time,dt);
   }
 
+  for(var j=0;j<=1000;j++){
+    //console.log("");
+  }
+
+  if (old_traffic_obj.length > 0 && toggle%2 === 0)
+  { if (old_traffic_obj[0].isActive == true && old_traffic_obj[0].value == "green"){
+  
+    imgTLred1 = new Image();
+   imgTLred1.src="figs/trafficLightYellow.png";
+   old_traffic_obj[0].road.changeTrafficLight(old_traffic_obj[0].id, "green");
+   old_traffic_obj[0].image = imgTLred1;
+   console.log("Yellow");
+  }
+  }
+  
+   if (old_traffic_obj.length > 0 && toggle%2 === 1)
+   {
+    if (old_traffic_obj[0].isActive == true && old_traffic_obj[0].value == "green"){
+      imgTLred2 = new Image();
+    imgTLred2.src="figs/trafficLight_green.png";
+    old_traffic_obj[0].road.changeTrafficLight(old_traffic_obj[0].id, "green");
+    old_traffic_obj[0].image = imgTLred2
+    console.log("Green");
+   }
+  }
+
+   toggle = toggle + 1;
+   console.log("tog", toggle);
+
 
   //if(itime==526){alert("stopDebug");}
+ 
 }//updateSim
 
 
@@ -827,7 +862,34 @@ function updateSim(){
 //##################################################
 function drawSim() {
 //##################################################
+/*
+if (old_traffic_obj.length > 0 && toggle%2 === 0)
+{ if (old_traffic_obj[0].isActive == true){
 
+  imgTLred1 = new Image();
+ imgTLred1.src="figs/trafficLightYellow.png";
+ old_traffic_obj[0].road.changeTrafficLight(old_traffic_obj[0].id, "green");
+ old_traffic_obj[0].image = imgTLred1;
+ console.log("Yellow");
+
+ for (let i = 1; i <= 5; i++) {
+   setTimeout(() => console.log(`#${i}`), 5000);
+ }
+}
+}
+
+ if (old_traffic_obj.length > 0 && toggle%2 === 1)
+ {
+  if (old_traffic_obj[0].isActive == true){
+    imgTLred2 = new Image();
+  imgTLred2.src="figs/trafficLight_green.png";
+  old_traffic_obj[0].road.changeTrafficLight(old_traffic_obj[0].id, "green");
+  old_traffic_obj[0].image = imgTLred2
+  console.log("Green");
+ }}
+ toggle = toggle + 1;
+ console.log("tog", toggle);
+ */
   //if(itime==182){console.log("begin drawsim:"); debugVeh(211);}
 
   var movingObserver=false; // relative motion works, only start offset
@@ -919,7 +981,6 @@ function drawSim() {
   }
   
   //if(itime==182){console.log("end drawsim:"); debugVeh(211);}
-
 } // drawSim
 
  

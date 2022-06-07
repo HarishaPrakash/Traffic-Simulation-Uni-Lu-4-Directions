@@ -88,6 +88,8 @@ look for ".copy" in other js files
 */
 
 var objectsZoomBack=false;
+var old_traffic_obj = []
+var new_traffic_obj = []
 
 function TrafficObjects(canvas,nTL,nLimit,xRelDepot,yRelDepot,nRow,nCol){
 
@@ -129,6 +131,7 @@ function TrafficObjects(canvas,nTL,nLimit,xRelDepot,yRelDepot,nRow,nCol){
 
   this.imgTLgreen = new Image();
   this.imgTLgreen.src="figs/trafficLight_green.png";
+  //this.imgTLgreen.src="figs/gif1.gif";
   this.imgTLred = new Image();
   this.imgTLred.src="figs/trafficLight_red.png";
   this.imgTyellow = new Image();
@@ -799,7 +802,6 @@ TrafficObjects.prototype.setTrafficLight=function(obj, value){
       obj.road.writeTrafficLights();
     }
   }
-
   
 }
   
@@ -848,10 +850,27 @@ should also be called if clicked but not dragged
       console.log("end TrafficObjects.changeTrafficLightByUser: no success");
     }
   }
-
+  var already_found = false
+  for (var i = 0; i<old_traffic_obj.length;i++){
+    if (old_traffic_obj[i].id === results[1].id){
+      console.log("printloop", old_traffic_obj[0].id)
+      old_traffic_obj.pop(i);
+      already_found = true;}
+  }
+  if (already_found === false){
+    old_traffic_obj.push(results[1]);
+    console.log("print", old_traffic_obj[0].id);
+  }
+  
+ /*
+  old_traffic_obj.push(results[1]);
+  console.log("print", old_traffic_obj.length);
+  old_traffic_obj.pop(0);
+  */
   return success;
 
 }
+
 
 /*####################################################################
 bring back all dragged trafficObj objects back to the depot 
