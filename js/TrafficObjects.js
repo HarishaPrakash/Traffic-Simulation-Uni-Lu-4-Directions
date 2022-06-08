@@ -850,18 +850,23 @@ should also be called if clicked but not dragged
       console.log("end TrafficObjects.changeTrafficLightByUser: no success");
     }
   }
-  var already_found = false
+
   for (var i = 0; i<old_traffic_obj.length;i++){
-    if (old_traffic_obj[i].id === results[1].id){
-      console.log("printloop", old_traffic_obj[0].id)
+    if (old_traffic_obj[i].id === results[1].id && old_traffic_obj[i].value === "green" && results[1].id === "red"){
+      //console.log("printloop", old_traffic_obj[i].id)
       old_traffic_obj.pop(i);
-      already_found = true;}
+      break;
+    }
   }
-  if (already_found === false){
+
+  //old_traffic_obj.push(results[1]);
+  //console.log("print", results[1].id);
+
+  if (results[1].value === "green"){
     old_traffic_obj.push(results[1]);
-    console.log("print", old_traffic_obj[0].id);
+    //console.log("print", results[1].id);
   }
-  
+
  /*
   old_traffic_obj.push(results[1]);
   console.log("print", old_traffic_obj.length);
