@@ -822,48 +822,48 @@ function updateSim(){
     detectors[iDet].update(time,dt);
   }
 
-  function sleep(ms){
-    return new Promise((resolve, reject) => { 
-      setTimeout(() => {resolve(ms);
-      }, ms);
-    })
-  }
 
-  async function myFunction(){
-
-      await sleep(5000);
-      console.log("Hi")
-
-      if(old_traffic_obj.length > 0){
-        for(var i=0; i<old_traffic_obj.length;i++){
-          if (toggle%2 === 0){
-            if (old_traffic_obj[i].isActive == true && old_traffic_obj[i].value == "green"){
-              imgTLred1 = new Image();
-              imgTLred1.src="figs/trafficLightYellow.png";
-              old_traffic_obj[i].road.changeTrafficLight(old_traffic_obj[i].id, "green");
-              old_traffic_obj[i].image = imgTLred1;
-            }
-          }
-    
-        await sleep(5000);
-          if (toggle%2 === 1){
-            if (old_traffic_obj[i].isActive == true && old_traffic_obj[i].value == "green"){
-              imgTLred2 = new Image();
-              imgTLred2.src="figs/trafficLight_green.png";
-              old_traffic_obj[i].road.changeTrafficLight(old_traffic_obj[i].id, "green");
-              old_traffic_obj[i].image = imgTLred2;
-        await sleep(5000);
-             }
-          }
-        }
+  function sleep1(milliseconds) {
+    var start = new Date().getTime();
+    for (var i = 0; i < 1e7; i++) {
+      if ((new Date().getTime() - start) > milliseconds){
+        break;
       }
- }
+    }
+  }
+  
+  
+  if(old_traffic_obj.length > 0){
+  
+    for(var i=0; i<old_traffic_obj.length;i++){
+      if (toggle%2 === 0){
 
-  myFunction();
+          if (old_traffic_obj[i].isActive == true && old_traffic_obj[i].value == "green"){
+            imgTLred1 = new Image();
+            imgTLred1.src="figs/trafficLightYellow.png";
+            //old_traffic_obj[i].road.changeTrafficLight(old_traffic_obj[i].id, "green");
+            old_traffic_obj[i].image = imgTLred1;
+          }
+        
+  
+      }
+      //sleep1(50)
+      if (toggle%2 === 1){
 
+          if (old_traffic_obj[i].isActive == true && old_traffic_obj[i].value == "green"){
+          imgTLred2 = new Image();
+          imgTLred2.src="figs/trafficLight_green.png";
+          //old_traffic_obj[i].road.changeTrafficLight(old_traffic_obj[i].id, "green");
+          old_traffic_obj[i].image = imgTLred2;
+          }  
+    }
+  
+  }
+  }
+  
+  toggle = toggle + 1;
 
   
-
 /*
   if (old_traffic_obj.length > 0 && toggle%2 === 0)
   { if (old_traffic_obj[0].isActive == true && old_traffic_obj[0].value == "green"){
@@ -887,10 +887,14 @@ function updateSim(){
    }
   }
 */
-   toggle = toggle + 1;
+   
   //if(itime==526){alert("stopDebug");}
  
 }//updateSim
+
+
+
+
 
 
 

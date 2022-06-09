@@ -852,9 +852,11 @@ should also be called if clicked but not dragged
   }
 
   for (var i = 0; i<old_traffic_obj.length;i++){
+    console.log(old_traffic_obj[i].id, old_traffic_obj[i].value, )
     if (old_traffic_obj[i].id === results[1].id && old_traffic_obj[i].value === "green" && results[1].id === "red"){
       //console.log("printloop", old_traffic_obj[i].id)
       old_traffic_obj.pop(i);
+      console.log("Pop")
       break;
     }
   }
