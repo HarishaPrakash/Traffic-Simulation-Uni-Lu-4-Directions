@@ -836,7 +836,7 @@ function updateSim(){
   if(old_traffic_obj.length > 0){
   
     for(var i=0; i<old_traffic_obj.length;i++){
-      if (toggle%2 === 0){
+      if (toggle%25 === 0){
 
           if (old_traffic_obj[i].isActive == true && old_traffic_obj[i].value == "green"){
             imgTLred1 = new Image();
@@ -848,7 +848,7 @@ function updateSim(){
   
       }
       //sleep1(50)
-      if (toggle%2 === 1){
+      if (toggle%50 === 0){
 
           if (old_traffic_obj[i].isActive == true && old_traffic_obj[i].value == "green"){
           imgTLred2 = new Image();
