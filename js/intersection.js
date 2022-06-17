@@ -23,8 +23,8 @@ var greenMain=33; //33
 var dt_lastSwitch=0;
 
 
-var nLanes_main=2;
-var nLanes_sec=2;
+var nLanes_main=1;
+var nLanes_sec=1;
 var laneCount=nLanes_main+nLanes_sec;
 
 // slider-controlled vars definined in control_gui.js
@@ -40,8 +40,7 @@ timewarp=3.5;
 
 var mainroadLen=200;              // reference size in m
 
-//var laneWidth=10.0; //3 
-var laneWidth=5.0;
+var laneWidth=10.0; //3 
 var car_length=5;    // car length in m (all a bit oversize for visualisation)
 var car_width=2.5;     // car width in m
 var truck_length=10;
@@ -78,7 +77,6 @@ console.log("after addTouchListeners()");
 
 var fitfactor=1.00;
 var refSizePhys=fitfactor*mainroadLen*canvas.height/canvas.width;
-
 var isSmartphone=mqSmartphone();  // from css; only influences text size
 
 
@@ -100,7 +98,7 @@ function updateDimensions(){ // if viewport->canvas or sizePhys changed
   refSizePix=canvas.height;     // corresponds to pixel size of smaller side
   scale=refSizePix/refSizePhys;
   
-  if(false){
+  if(true){
     console.log("updateDimensions: canvas.width=",canvas.width,
 		" canvas.height=",canvas.height,
 		" aspectRatio=",aspectRatio.toFixed(2),
@@ -521,7 +519,7 @@ var TL=trafficObjs.trafficObj.slice(0,4);  // last index not included
 
 // !! Editor not yet finished
 // (then args xRelEditor,yRelEditor not relevant unless editor shown)
-var trafficLightControl=new TrafficLightControlEditor(trafficObjs,0.5,0.5);
+//var trafficLightControl=new TrafficLightControlEditor(trafficObjs,0.5,0.5);
 
 
 
@@ -818,110 +816,51 @@ function updateSim(){
   }
 
 
-  
     // updateSim (6): update detector readings
 
   for(var iDet=0; iDet<detectors.length; iDet++){
     detectors[iDet].update(time,dt);
-  }  
-  
-  if(old_traffic_obj.length > 0){
-  
-    for(var i=0; i<old_traffic_obj.length;i++){
-      if (toggle%25 === 0){
+  }
 
-          if (old_traffic_obj[i].isActive == true && old_traffic_obj[i].value == "green"){
-            imgTLred1 = new Image();
-            imgTLred1.src="figs/trafficLightYellow.png";
-            //old_traffic_obj[i].road.changeTrafficLight(old_traffic_obj[i].id, "green");
-            old_traffic_obj[i].image = imgTLred1;
-          }
-        
-  
-      }
-      //sleep1(50)
-      if (toggle%50 === 0){
-
-          if (old_traffic_obj[i].isActive == true && old_traffic_obj[i].value == "green"){
-          imgTLred2 = new Image();
-          imgTLred2.src="figs/trafficLight_green.png";
-          //old_traffic_obj[i].road.changeTrafficLight(old_traffic_obj[i].id, "green");
-          old_traffic_obj[i].image = imgTLred2;
-          }  
-    }
-  
-  }
-  }
-  
-  toggle = toggle + 1;
-
-  
-/*
-  if (old_traffic_obj.length > 0 && toggle%2 === 0)
-  { if (old_traffic_obj[0].isActive == true && old_traffic_obj[0].value == "green"){
-  
-    imgTLred1 = new Image();
-   imgTLred1.src="figs/trafficLightYellow.png";
-   old_traffic_obj[0].road.changeTrafficLight(old_traffic_obj[0].id, "green");
-   old_traffic_obj[0].image = imgTLred1;
-   console.log("Yellow");
-  }
-  }
-  
-   if (old_traffic_obj.length > 0 && toggle%2 === 1)
-   {
-    if (old_traffic_obj[0].isActive == true && old_traffic_obj[0].value == "green"){
-      imgTLred2 = new Image();
-    imgTLred2.src="figs/trafficLight_green.png";
-    old_traffic_obj[0].road.changeTrafficLight(old_traffic_obj[0].id, "green");
-    old_traffic_obj[0].image = imgTLred2
-    console.log("Green");
-   }
-  }
-*/
-   
+  //Added by Harisha Prakash
+  updateTrafficRobots();
+ 
   //if(itime==526){alert("stopDebug");}
  
 }//updateSim
 
+//Added by Harisha Prakash
+function updateTrafficRobots(){
+  for(var i=0; i<TL.length;i++){
+    
+    if (toggle%25 === 0){
 
+        if (TL[i].isActive == true && TL[i].value == "green"){
+          imgTLred1 = new Image();
+          imgTLred1.src="figs/trafficLightYellow.png";
+          TL[i].image = imgTLred1;
+        }
+      
 
+    }
+    if (toggle%50 === 0){
 
+        if (TL[i].isActive == true && TL[i].value == "green"){
+        imgTLred2 = new Image();
+        imgTLred2.src="figs/trafficLight_green.png";
+        TL[i].image = imgTLred2;
+        }  
+  }
 
-
+}
+toggle = toggle + 1;
+}
 
 
 //##################################################
 function drawSim() {
 //##################################################
-/*
-if (old_traffic_obj.length > 0 && toggle%2 === 0)
-{ if (old_traffic_obj[0].isActive == true){
 
-  imgTLred1 = new Image();
- imgTLred1.src="figs/trafficLightYellow.png";
- old_traffic_obj[0].road.changeTrafficLight(old_traffic_obj[0].id, "green");
- old_traffic_obj[0].image = imgTLred1;
- console.log("Yellow");
-
- for (let i = 1; i <= 5; i++) {
-   setTimeout(() => console.log(`#${i}`), 5000);
- }
-}
-}
-
- if (old_traffic_obj.length > 0 && toggle%2 === 1)
- {
-  if (old_traffic_obj[0].isActive == true){
-    imgTLred2 = new Image();
-  imgTLred2.src="figs/trafficLight_green.png";
-  old_traffic_obj[0].road.changeTrafficLight(old_traffic_obj[0].id, "green");
-  old_traffic_obj[0].image = imgTLred2
-  console.log("Green");
- }}
- toggle = toggle + 1;
- console.log("tog", toggle);
- */
   //if(itime==182){console.log("begin drawsim:"); debugVeh(211);}
 
   var movingObserver=false; // relative motion works, only start offset
@@ -1055,10 +994,12 @@ function nextTLphase(){
   console.log("in nextTLphase: TL[0].value=",TL[0].value);
   if(TL[0].value=="green") for(var i=0; i<4; i++){
     trafficObjs.setTrafficLight(TL[i], (i<2) ? "red" : "green");
+    //old_traffic_obj.push(TL[i]); //Harisha Prakash
   }
   else for(var i=0; i<4; i++){
     trafficObjs.setTrafficLight(TL[i], (i<2) ? "green" : "red");
   }
+
 }
 
 

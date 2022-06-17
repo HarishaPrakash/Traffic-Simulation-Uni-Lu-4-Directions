@@ -494,25 +494,6 @@ function handleClick(event){
 		" speedlBoxActive=",speedlBoxActive);
   }
 
-
-  //################################################
-  // (1) MT 2020-07: editor panel (not yet functional)
-  // overrides all other click actions
-  //################################################
-
-  if((trafficLightControl.isActive)
-     && trafficLightControl.mouseIsInside(xPixUser, yPixUser)){
-    console.log("handleClick: in trafficLightControl part");
-    trafficLightControl.selectCycleTime([xPixUser, yPixUser]);
-
-    return; 
-  }
-
-
-  // only if clicked w/o drag:
-  // deal with either speedlimit changes, TL, or slow vehicles
-  // (drop vehicles/drag them away etc only if isDragged)
-
   if(!isDragged){
     
     // (2) speedlimit changes if applicable

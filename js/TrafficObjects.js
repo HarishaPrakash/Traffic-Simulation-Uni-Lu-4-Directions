@@ -89,7 +89,6 @@ look for ".copy" in other js files
 
 var objectsZoomBack=false;
 var old_traffic_obj = []
-var new_traffic_obj = []
 
 function TrafficObjects(canvas,nTL,nLimit,xRelDepot,yRelDepot,nRow,nCol){
 
