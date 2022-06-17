@@ -23,8 +23,8 @@ var greenMain=33; //33
 var dt_lastSwitch=0;
 
 
-var nLanes_main=1;
-var nLanes_sec=1;
+var nLanes_main=2;
+var nLanes_sec=2;
 var laneCount=nLanes_main+nLanes_sec;
 
 // slider-controlled vars definined in control_gui.js
@@ -40,7 +40,8 @@ timewarp=3.5;
 
 var mainroadLen=200;              // reference size in m
 
-var laneWidth=10.0; //3 
+//var laneWidth=10.0; //3 
+var laneWidth=5.0;
 var car_length=5;    // car length in m (all a bit oversize for visualisation)
 var car_width=2.5;     // car width in m
 var truck_length=10;
@@ -77,6 +78,7 @@ console.log("after addTouchListeners()");
 
 var fitfactor=1.00;
 var refSizePhys=fitfactor*mainroadLen*canvas.height/canvas.width;
+
 var isSmartphone=mqSmartphone();  // from css; only influences text size
 
 
@@ -98,7 +100,7 @@ function updateDimensions(){ // if viewport->canvas or sizePhys changed
   refSizePix=canvas.height;     // corresponds to pixel size of smaller side
   scale=refSizePix/refSizePhys;
   
-  if(true){
+  if(false){
     console.log("updateDimensions: canvas.width=",canvas.width,
 		" canvas.height=",canvas.height,
 		" aspectRatio=",aspectRatio.toFixed(2),
@@ -816,22 +818,12 @@ function updateSim(){
   }
 
 
+  
     // updateSim (6): update detector readings
 
   for(var iDet=0; iDet<detectors.length; iDet++){
     detectors[iDet].update(time,dt);
-  }
-
-
-  function sleep1(milliseconds) {
-    var start = new Date().getTime();
-    for (var i = 0; i < 1e7; i++) {
-      if ((new Date().getTime() - start) > milliseconds){
-        break;
-      }
-    }
-  }
-  
+  }  
   
   if(old_traffic_obj.length > 0){
   

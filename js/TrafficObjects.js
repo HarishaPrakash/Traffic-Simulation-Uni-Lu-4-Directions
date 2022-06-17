@@ -95,7 +95,7 @@ function TrafficObjects(canvas,nTL,nLimit,xRelDepot,yRelDepot,nRow,nCol){
 
   this.nRow=nRow;
   this.nCol=nCol; 
-  this.n=nRow*nCol;
+  this.n=(nRow*nCol)/2;
   this.xRelDepot=xRelDepot;
   this.yRelDepot=yRelDepot;
   this.nTL=Math.min(nTL,this.n);
@@ -137,41 +137,12 @@ function TrafficObjects(canvas,nTL,nLimit,xRelDepot,yRelDepot,nRow,nCol){
   this.imgTyellow = new Image();
   this.imgTyellow.src="figs/trafficLight_yellow.png";
 
-  this.imgSpeedlRepo = []; 
-  for (var i=0; i<13; i++){
-    this.imgSpeedlRepo[i]=new Image();
-    this.imgSpeedlRepo[i].src = "figs/speedLimit_"+(i)+"0.svg";
-  }
-
-  this.imgObstRepo = []; 
-  for (var i=0; i<Math.min(this.nObst, this.nObstMax); i++){
-    this.imgObstRepo[i]=new Image();
-    this.imgObstRepo[i].src = "figs/obstacle_"+(50+i)+".png";
-    console.log("i=",i," this.imgObstRepo[i].src=",this.imgObstRepo[i].src);
-  }
-
-
-  
+ 
   // create all instances of trafficObj[]
 
   this.trafficObj=[];
-  var initSpeedInd=[6,8,10,0,12,3,4,5,1,2]; // speed 60 km/h,80,100,free..
+  //var initSpeedInd=[6,8,10,0,12,3,4,5,1,2]; // speed 60 km/h,80,100,free..
   for(var i=0; i<this.n; i++){
-
-    var isTL=(i<this.nTL);
-    var isSpeedl=(!isTL)&&(i<this.nTL+nLimit);
-    var isObst=!(isTL||isSpeedl);
-
-    var iSpeed=i-this.nTL;
-    var iObst=i-this.nTL-this.nLimit;
-    
-    var img=(isTL) ? this.imgTLred : (isSpeedl)
-      ? this.imgSpeedlRepo[initSpeedInd[iSpeed]] : this.imgObstRepo[iObst];
-    if(true){
-      console.log("TrafficObjects cstr: i=",i,
-		  " img=",img," iObst=",iObst);
-    }
-
     //#################################################################
     // xxx central object this.trafficObj[i]
     // object on road: isActive=true, u>=0,inDepot=isDragged=false 
@@ -186,12 +157,10 @@ function TrafficObjects(canvas,nTL,nLimit,xRelDepot,yRelDepot,nRow,nCol){
     //#################################################################
 
     this.trafficObj[i]={
-      id:    (isTL) ? 100+i : (isSpeedl) ? 150+iSpeed : 50+iObst,
-      type:  (isTL) ? "trafficLight" : (isSpeedl) ? "speedLimit" : "obstacle",
-      image: (isTL) ? this.imgTLred : (isSpeedl)
-	? this.imgSpeedlRepo[initSpeedInd[iSpeed]] : this.imgObstRepo[iObst],
-      value: (isTL) ? "red" : (isObst) ? "null" : 10*initSpeedInd[iSpeed],
-                                                 // speedlimit in km/h!!
+      id:    100+i,
+      type:  "trafficLight" ,
+      image: this.imgTLred,
+      value: "red",
       isActive: false, 
       inDepot:  true,
       isPicked: false,   // !! controlled by pickRoadOrObject (canvas_gui)
@@ -215,12 +184,6 @@ function TrafficObjects(canvas,nTL,nLimit,xRelDepot,yRelDepot,nRow,nCol){
       xPixDepot: 42,     // xPix=xPixDepot if !isActive and 
       yPixDepot: 42      // graphics zoomed back to depot
     };
-
-    if((this.trafficObj[i].type=="speedLimit") 
-       &&(this.trafficObj[i].value==0)){
-      this.trafficObj[i].value=300; // no speedlimit if index 0->00 km/h
-    }
-
     
   } // loop over elements
 
@@ -861,19 +824,11 @@ should also be called if clicked but not dragged
     }
   }
 
-  //old_traffic_obj.push(results[1]);
-  //console.log("print", results[1].id);
-
   if (results[1].value === "green"){
     old_traffic_obj.push(results[1]);
     //console.log("print", results[1].id);
   }
 
- /*
-  old_traffic_obj.push(results[1]);
-  console.log("print", old_traffic_obj.length);
-  old_traffic_obj.pop(0);
-  */
   return success;
 
 }
